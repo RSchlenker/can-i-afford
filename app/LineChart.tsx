@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 ChartJS.register(
   CategoryScale,
@@ -39,11 +39,5 @@ const options: ChartOptions<'line'> = {
 
 export default function LineChart({ data }) {
   const chartRef = useRef(null)
-
-  useEffect(() => {
-    const chart = chartRef.current
-    chart.update()
-  }, [data])
-
   return <Line ref={chartRef} options={options} data={data} />
 }
