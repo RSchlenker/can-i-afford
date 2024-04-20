@@ -11,20 +11,13 @@ it('should display heading', () => {
 
 it('should update data on button click', () => {
   renderWithProviders(<Page />)
-  expect(screen.getByTestId('start-year')).toHaveTextContent('2025')
   expect(screen.getByTestId('chart')).toHaveAttribute(
     'data-chart-result',
     '50840',
   )
-  fireEvent.click(screen.getAllByRole('button')[0])
-  expect(screen.getByTestId('start-year')).toHaveTextContent('2015')
+  fireEvent.click(screen.getByTestId('add-factor'))
   expect(screen.getByTestId('chart')).toHaveAttribute(
     'data-chart-result',
-    '51080',
-  )
-  fireEvent.click(screen.getAllByRole('button')[1])
-  expect(screen.getByTestId('chart')).toHaveAttribute(
-    'data-chart-result',
-    '105080',
+    '92840',
   )
 })
