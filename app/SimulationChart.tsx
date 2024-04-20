@@ -6,7 +6,7 @@ import { simulateForChartJS } from '@/business/adapters/chartjs'
 import { useEffect, useState } from 'react'
 
 export default function SimulationChart() {
-  const factors = [monthlyIncome(2000)]
+  const factors = useAppSelector((state: RootState) => state.chart.factors)
   const startYear = useAppSelector((state: RootState) => state.chart.startYear)
   const endYear = useAppSelector((state: RootState) => state.chart.endYear)
   const startVolume = useAppSelector(
@@ -32,6 +32,10 @@ export default function SimulationChart() {
   }
   const [data, setData] = useState(currentData)
 
+  const lastEntry = (data) => {
+    return data.datasets[0].data[data.datasets[0].data.length - 1]
+  }
+
   useEffect(() => {
     const chartjsData = simulateForChartJS(simulationRequest)
     currentData = {
@@ -44,7 +48,11 @@ export default function SimulationChart() {
       ],
     }
     setData(currentData)
-  }, [startYear, endYear, startVolume])
+  }, [startYear, endYear, startVolume, factors])
 
-  return <LineChart data={data} />
+  return (
+    <div data-testid="chart" data-chart-result={lastEntry(data)}>
+      <LineChart data={data} />
+    </div>
+  )
 }

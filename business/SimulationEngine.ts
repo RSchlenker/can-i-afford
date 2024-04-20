@@ -1,10 +1,16 @@
 import { simulate } from './simulator'
 
+export interface Factor {
+  name: string
+  factor: Function
+  id: string
+}
+
 export interface SimulationRequest {
   startYear: number
   endYear: number
   startVolume: number
-  factors: Function
+  factors: Array<Factor>
 }
 
 export interface SimulationResult {
@@ -14,8 +20,9 @@ export interface SimulationResult {
 
 export class SimulationEngine {
   simulate(request: SimulationRequest): Array<SimulationResult> {
+    const factorsToSimulate = request.factors.map((f) => f.factor)
     return simulate(
-      request.factors,
+      factorsToSimulate,
       request.startYear,
       request.endYear,
       request.startVolume,

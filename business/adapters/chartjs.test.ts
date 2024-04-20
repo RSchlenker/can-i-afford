@@ -4,7 +4,7 @@ import { simulateForChartJS } from './chartjs'
 
 it('should return chart data', () => {
   const request = {
-    factors: [income(2000)],
+    factors: [{ factor: income(2000) }],
     startYear: 2022,
     endYear: 2024,
     startVolume: 0,

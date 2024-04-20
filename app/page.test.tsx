@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import Page from './page'
 import { renderWithProviders } from '../tests/utils'
-import { expect } from '@jest/globals'
+import { expect, it } from '@jest/globals'
 import { fireEvent } from '@testing-library/dom'
 
 it('should display heading', () => {
@@ -12,6 +12,19 @@ it('should display heading', () => {
 it('should update data on button click', () => {
   renderWithProviders(<Page />)
   expect(screen.getByTestId('start-year')).toHaveTextContent('2025')
-  fireEvent.click(screen.getByRole('button'))
+  expect(screen.getByTestId('chart')).toHaveAttribute(
+    'data-chart-result',
+    '50840',
+  )
+  fireEvent.click(screen.getAllByRole('button')[0])
   expect(screen.getByTestId('start-year')).toHaveTextContent('2015')
+  expect(screen.getByTestId('chart')).toHaveAttribute(
+    'data-chart-result',
+    '51080',
+  )
+  fireEvent.click(screen.getAllByRole('button')[1])
+  expect(screen.getByTestId('chart')).toHaveAttribute(
+    'data-chart-result',
+    '105080',
+  )
 })

@@ -5,7 +5,7 @@ import { expect } from '@jest/globals'
 it('Should simulate over 2 years', () => {
   const engine: SimulationEngine = new SimulationEngine()
   const request = {
-    factors: [income(2000)],
+    factors: [{ factor: income(2000) }],
     startYear: 2022,
     endYear: 2024,
     startVolume: 0,
