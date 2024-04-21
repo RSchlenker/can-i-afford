@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Factor } from '@/business/SimulationEngine'
 import { monthlyIncome } from '@/business/finances'
-import { uuid } from 'uuidv4'
+import { v4 as uuidv4 } from 'uuid'
 
 export interface IChartSlice {
   startYear: number
@@ -25,7 +25,7 @@ export const chartSlice = createSlice({
       state.startYear = action.payload
     },
     addFactor: (state, action: PayloadAction) => {
-      state.factors.push({ ...action.payload, id: uuid() })
+      state.factors.push({ ...action.payload, id: uuidv4() })
     },
   },
 })
