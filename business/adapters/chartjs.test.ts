@@ -1,6 +1,7 @@
 import { income } from '../finances'
 import { SimulationRequest } from '../SimulationEngine'
 import { simulateForChartJS } from './chartjs'
+import { expect, it } from '@jest/globals'
 
 it('should return chart data', () => {
   const request = {
@@ -11,7 +12,7 @@ it('should return chart data', () => {
   } as SimulationRequest
   const chartData = simulateForChartJS(request)
   expect(chartData).toEqual({
-    labels: [2022, 2023, 2024],
+    labels: ['2022', '2023', '2024'],
     data: [0, 2000, 4000],
   })
 })

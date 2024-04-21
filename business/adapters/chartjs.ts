@@ -11,8 +11,8 @@ export interface ChartData {
 
 export function simulateForChartJS(request: SimulationRequest): ChartData {
   const simulation = new SimulationEngine().simulate(request)
-  const labels = simulation.map(
-    (result: SimulationResult) => result.year as string,
+  const labels = simulation.map((result: SimulationResult) =>
+    result.year.toString(),
   )
   const data = simulation.map((result: SimulationResult) => result.volume)
   return { labels, data }

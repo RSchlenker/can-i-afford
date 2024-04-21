@@ -1,5 +1,4 @@
 import LineChart from './LineChart'
-import { monthlyIncome } from '@/business/finances'
 import { RootState, useAppSelector } from '../store/store'
 import { SimulationRequest } from '@/business/SimulationEngine'
 import { simulateForChartJS } from '@/business/adapters/chartjs'
@@ -32,7 +31,7 @@ export default function SimulationChart() {
   }
   const [data, setData] = useState(currentData)
 
-  const lastEntry = (data) => {
+  const lastEntry = (data: any) => {
     return data.datasets[0].data[data.datasets[0].data.length - 1]
   }
 

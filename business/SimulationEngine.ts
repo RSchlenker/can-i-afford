@@ -3,7 +3,7 @@ import { simulate } from './simulator'
 export interface Factor {
   name: string
   factor: Function
-  id: string
+  id?: string
 }
 
 export interface SimulationRequest {

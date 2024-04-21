@@ -21,11 +21,13 @@ export const chartSlice = createSlice({
   name: 'chart',
   initialState,
   reducers: {
-    setStartYear: (state, action: PayloadAction) => {
+    setStartYear: (state, action: PayloadAction<number>) => {
       state.startYear = action.payload
     },
-    addFactor: (state, action: PayloadAction) => {
-      state.factors.push({ ...action.payload, id: uuidv4() })
+    addFactor: (state, action?: PayloadAction<Factor>) => {
+      if (action) {
+        state.factors.push({ ...action.payload, id: uuidv4() })
+      }
     },
   },
 })

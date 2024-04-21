@@ -9,7 +9,7 @@ export default function Page() {
     <ReduxProvider>
       <main className="mx-auto p-8">
         <h1 className="text-2xl text-center">Can I afford?</h1>
-        <div className="w-2/3 mx-auto">
+        <div className="w-1/2 mx-auto">
           <SimulationChart />
         </div>
         <BaseControlPanel />
