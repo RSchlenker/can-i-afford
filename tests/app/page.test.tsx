@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
-import Page from './page'
-import { renderWithProviders } from '../tests/utils'
+import Page from '../../app/page'
+import { renderWithProviders } from '../utils'
 import { expect, it } from '@jest/globals'
 import { fireEvent } from '@testing-library/dom'
 

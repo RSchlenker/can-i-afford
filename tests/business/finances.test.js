@@ -17,8 +17,8 @@ import {
   reducedDuring,
   untilYear,
   withMaxDifference,
-} from './finances'
-import { multipleYears } from './future'
+} from '@/business/finances'
+import { multipleYears } from '@/business/future'
 
 it('Should add monthly income', () => {
   const after3Years = multipleYears([monthlyIncome(2000)], 2022, 3, 0)

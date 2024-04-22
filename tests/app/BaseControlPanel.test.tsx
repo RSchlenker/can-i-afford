@@ -1,6 +1,6 @@
 import { expect, it } from '@jest/globals'
-import { renderWithProviders } from '../tests/utils'
-import BaseControlPanel from './BaseControlPanel'
+import { renderWithProviders } from '../utils'
+import BaseControlPanel from '../../app/BaseControlPanel'
 import { fireEvent, screen } from '@testing-library/dom'
 
 it('should add a income factor', () => {

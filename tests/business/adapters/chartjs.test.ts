@@ -1,6 +1,6 @@
-import { income } from '../finances'
-import { SimulationRequest } from '../SimulationEngine'
-import { simulateForChartJS } from './chartjs'
+import { income } from '@/business/finances'
+import { SimulationRequest } from '@/business/SimulationEngine'
+import { simulateForChartJS } from '@/business/adapters/chartjs'
 import { expect, it } from '@jest/globals'
 
 it('should return chart data', () => {

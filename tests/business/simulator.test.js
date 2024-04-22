@@ -6,8 +6,8 @@ import {
   monthlyIncome,
   monthlyIncomeWithYearlyChange,
   monthlyOutcomeWithYearlyChange,
-} from './finances'
-import { simulate } from './simulator'
+} from '../../business/finances'
+import { simulate } from '../../business/simulator'
 
 it('should simulate a basic scenario over 4 years', () => {
   const factors = [income(1000)]

@@ -1,6 +1,6 @@
 import * as R from 'ramda'
-import { etfs } from './finances'
-import { mapAll, multipleYears, oneYear } from './future'
+import { etfs } from '../../business/finances'
+import { mapAll, multipleYears, oneYear } from '../../business/future'
 
 it('should map multiple functions to one value', () => {
   const mapped = mapAll(1, 2020, [R.add(1), R.add(1)])

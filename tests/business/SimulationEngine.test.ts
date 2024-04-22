@@ -1,6 +1,9 @@
-import { SimulationEngine, SimulationRequest } from './SimulationEngine'
-import { income } from './finances'
-import { expect } from '@jest/globals'
+import {
+  SimulationEngine,
+  SimulationRequest,
+} from '@/business/SimulationEngine'
+import { income } from '@/business/finances'
+import { expect, it } from '@jest/globals'
 
 it('Should simulate over 2 years', () => {
   const engine: SimulationEngine = new SimulationEngine()
