@@ -29,8 +29,15 @@ export const chartSlice = createSlice({
         state.factors.push({ ...action.payload, id: uuidv4() })
       }
     },
+    removeFactor: (state, action?: PayloadAction<string>) => {
+      if (action) {
+        state.factors = state.factors.filter(
+          (factor: Factor) => factor.id !== action.payload,
+        )
+      }
+    },
   },
 })
 
-export const { setStartYear, addFactor } = chartSlice.actions
+export const { setStartYear, addFactor, removeFactor } = chartSlice.actions
 export const chartReducer = chartSlice.reducer

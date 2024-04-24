@@ -1,10 +1,11 @@
 import { RootState, useAppSelector } from '../store/store'
-import { FaMinus, FaPlus } from 'react-icons/fa6'
+import { FaArrowTrendDown, FaArrowTrendUp } from 'react-icons/fa6'
 import { Factor } from '@/business/SimulationEngine'
 import { useEffect, useState } from 'react'
 import UsedFactor from './UsedFactor'
 import AddFactorMenu from './AddFactorMenu'
 import FactorForm from './FactorForm'
+import { IncomeFactory } from '@/business/factorys/IncomeFactory'
 
 export default function BaseControlPanel() {
   const factors: Array<Factor> = useAppSelector(
@@ -27,10 +28,14 @@ export default function BaseControlPanel() {
   }
 
   return (
-    <div className="flex my-10 w-1/2 border-2 relative">
-      <div className="p-10">
+    <div className="flex my-10 flex-grow mx-20 border-2 relative">
+      <div className="p-10 w-full flex flex-wrap">
         {factorsToDisplay.map((factor) => {
-          return <UsedFactor key={factor.id} factor={factor} />
+          return (
+            <div key={factor.id || ''} className="m-3">
+              <UsedFactor factor={factor} />{' '}
+            </div>
+          )
         })}
       </div>
       {showMenu ? (
@@ -41,7 +46,7 @@ export default function BaseControlPanel() {
               onClick={initateForm}
             >
               <a data-testid="add-income">
-                <FaPlus className="mx-auto align-middle h-full text-white" />
+                <FaArrowTrendUp className="mx-auto align-middle h-full text-white" />
               </a>
             </div>
             <div
@@ -49,7 +54,7 @@ export default function BaseControlPanel() {
               onClick={initateForm}
             >
               <a data-testid="add-outcome">
-                <FaMinus className="mx-auto align-middle h-full text-white" />
+                <FaArrowTrendDown className="mx-auto align-middle h-full text-white" />
               </a>
             </div>
           </AddFactorMenu>
@@ -58,8 +63,12 @@ export default function BaseControlPanel() {
         ''
       )}
       {showForm ? (
-        <div className="ml-auto">
-          <FactorForm onFinished={reset} onCancel={reset} />
+        <div className="absolute top-0 right-0 shadow-2xl">
+          <FactorForm
+            factory={new IncomeFactory()}
+            onFinished={reset}
+            onCancel={reset}
+          />
         </div>
       ) : (
         ''

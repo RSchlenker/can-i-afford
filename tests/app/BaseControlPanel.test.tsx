@@ -1,7 +1,10 @@
 import { expect, it } from '@jest/globals'
 import { renderWithProviders } from '../utils'
 import BaseControlPanel from '../../app/BaseControlPanel'
-import { fireEvent, screen } from '@testing-library/dom'
+import { fireEvent, screen, within } from '@testing-library/dom'
+import { addFactor } from '../../store/chartSlice'
+import { income } from '@/business/finances'
+import { setupStore } from '../../store/store'
 
 it('should add a income factor', () => {
   const { store } = renderWithProviders(<BaseControlPanel />)
@@ -28,4 +31,19 @@ it('should should hide menu when showing form', () => {
   fireEvent.click(screen.getByTestId('add-income'))
   expect(screen.queryByTestId('add-income')).toBeNull()
   expect(screen.queryByTestId('add-factor')).toBeNull()
+})
+
+it('should be able to delete factors', () => {
+  const store = setupStore()
+  store.dispatch(addFactor({ factor: income(10), name: 'test-factor' }))
+  store.dispatch(addFactor({ factor: income(10), name: 'test-factor-2' }))
+  renderWithProviders(<BaseControlPanel />, { store })
+  const usedFactor = screen.getByText('test-factor')
+  fireEvent.click(usedFactor)
+  const deleteButton = within(
+    usedFactor.closest('[data-testid=used-factor]'),
+  ).getByTestId('delete-factor')
+  fireEvent.click(deleteButton)
+  expect(screen.queryByText('test-factor')).toBeNull()
+  expect(screen.queryByText('test-factor-2')).not.toBeNull()
 })
