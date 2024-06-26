@@ -1,11 +1,12 @@
 import { RootState, useAppSelector } from '../store/store'
-import { FaArrowTrendDown, FaArrowTrendUp } from 'react-icons/fa6'
+import { FaArrowTrendDown, FaArrowTrendUp, FaComment } from 'react-icons/fa6'
 import { Factor } from '@/business/SimulationEngine'
 import { useEffect, useState } from 'react'
 import UsedFactor from './UsedFactor'
 import AddFactorMenu from './AddFactorMenu'
 import FactorForm from './FactorForm'
 import { IncomeFactory } from '@/business/factorys/IncomeFactory'
+import AIDialog from './AIDialog'
 
 export default function BaseControlPanel() {
   const factors: Array<Factor> = useAppSelector(
@@ -18,6 +19,7 @@ export default function BaseControlPanel() {
 
   const [showMenu, toggleMenu] = useState(true)
   const [showForm, toggleForm] = useState(false)
+  const [showAIDialog, toggleAIDialog] = useState(false)
   const initateForm = () => {
     toggleMenu(false)
     toggleForm(true)
@@ -25,6 +27,11 @@ export default function BaseControlPanel() {
   const reset = () => {
     toggleMenu(true)
     toggleForm(false)
+    toggleAIDialog(false)
+  }
+  const initiateAIDialog = () => {
+    toggleMenu(false)
+    toggleAIDialog(true)
   }
 
   return (
@@ -47,6 +54,14 @@ export default function BaseControlPanel() {
             >
               <a data-testid="add-income">
                 <FaArrowTrendUp className="mx-auto align-middle h-full text-white" />
+              </a>
+            </div>
+            <div
+              className="h-8 w-8 rounded-full bg-emerald-500"
+              onClick={initiateAIDialog}
+            >
+              <a data-testid="add-income">
+                <FaComment className="mx-auto align-middle h-full text-white" />
               </a>
             </div>
             <div
@@ -73,6 +88,7 @@ export default function BaseControlPanel() {
       ) : (
         ''
       )}
+      {showAIDialog ? <AIDialog onFinished={reset} onCancel={reset} /> : ''}
     </div>
   )
 }
