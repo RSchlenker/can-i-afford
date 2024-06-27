@@ -22,7 +22,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.1.0",
     "react-loader-spinner": "^6.1.6",
-    "react-planet": "^1.0.1-ie11",
     "react-redux": "^9.1.1",
     "server-only": "^0.0.1",
     "ts-jest": "^29.1.2",
@@ -30,8 +29,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "6.1.5",
-    "@testing-library/react": "14.1.2",
+    "@testing-library/dom": "^10.2.0",
+    "@testing-library/jest-dom": "6.4.6",
+    "@testing-library/react": "16.0.0",
     "@types/jest": "^29.5.11",
     "@types/react": "18.2.45",
     "autoprefixer": "^10.4.19",
