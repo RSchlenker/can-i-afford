@@ -1,5 +1,4 @@
-import { Factor } from '@/business/SimulationEngine'
-import { AzureChatOpenAI } from '@langchain/openai'
+import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
 import { OpenAIToolCall } from '@langchain/core/messages'
 import {
   fromToYear,
@@ -9,23 +8,8 @@ import {
   reducedDuring,
 } from '@/business/finances'
 
-interface OpenAIResult {
-  name: string
-  id: string
-  args: {
-    name: string
-  }
-}
-
-export async function processUserInput(
-  model: AzureChatOpenAI,
-  input: string,
-): Promise<OpenAIResult[]> {
-  return []
-}
-
 export function convertToFactors(processResponse: OpenAIToolCall[]): Factor[] {
-  const factors = []
+  const factors: Factor[] = []
   console.log(processResponse)
   processResponse.forEach((toolCall) => {
     const { name, amount, startYear, endYear, factor } = toolCall.args
@@ -33,16 +17,28 @@ export function convertToFactors(processResponse: OpenAIToolCall[]): Factor[] {
       factors.push({
         name,
         factor: fromToYear(startYear, endYear, monthlyIncome(amount)),
+        type: FACTOR_TYPES.INCOME,
+        amount,
+        startYear,
+        endYear,
       })
     } else if (toolCall.name === 'monthlyOutcome') {
       factors.push({
         name,
         factor: fromToYear(startYear, endYear, monthlyOutcome(amount)),
+        type: FACTOR_TYPES.MONTHLY_OUTCOME,
+        amount,
+        startYear,
+        endYear,
       })
     } else if (toolCall.name === 'yearlyOutcome') {
       factors.push({
         name,
         factor: fromToYear(startYear, endYear, outcome(amount)),
+        type: FACTOR_TYPES.YEARLY_OUTCOME,
+        amount,
+        startYear,
+        endYear,
       })
     } else if (toolCall.name === 'reduceTo') {
       const existingFactor = factors.find((f) => f.name === name)
@@ -52,6 +48,10 @@ export function convertToFactors(processResponse: OpenAIToolCall[]): Factor[] {
         factor,
         existingFactor.factor,
       )
+      const reduction = { factor, startYear, endYear }
+      existingFactor.reductions
+        ? existingFactor.reductions.push(reduction)
+        : (existingFactor.reductions = [reduction])
     }
   })
   console.log(factors)

@@ -1,9 +1,21 @@
 import { simulate } from './simulator'
 
+export enum FACTOR_TYPES {
+  INCOME,
+  MONTHLY_OUTCOME,
+  YEARLY_OUTCOME,
+  OTHER,
+}
+
 export interface Factor {
   name: string
   factor: Function
   id?: string
+  type: FACTOR_TYPES
+  reductions?: object[]
+  amount?: number
+  startYear?: number
+  endYear?: number
 }
 
 export interface SimulationRequest {
