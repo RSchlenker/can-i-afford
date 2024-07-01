@@ -1,4 +1,4 @@
-import LineChart from './LineChart'
+import LineChart from './components/LineChart'
 import { RootState, useAppSelector } from '../store/store'
 import { SimulationRequest } from '@/business/SimulationEngine'
 import { simulateForChartJS } from '@/business/adapters/chartjs'
@@ -41,7 +41,7 @@ export default function SimulationChart() {
       labels: chartjsData.labels,
       datasets: [
         {
-          label: 'Dataset 1',
+          label: 'Vermögen',
           data: chartjsData.data,
         },
       ],

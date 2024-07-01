@@ -1,7 +1,7 @@
 import { RootState, useAppSelector } from '../store/store'
 import { Factor } from '@/business/SimulationEngine'
 import { useEffect, useState } from 'react'
-import UsedFactor from './UsedFactor'
+import FactorView from './factors/FactorView'
 
 export default function BaseControlPanel() {
   const factors: Array<Factor> = useAppSelector(
@@ -18,7 +18,7 @@ export default function BaseControlPanel() {
         {factorsToDisplay.map((factor) => {
           return (
             <div key={factor.id || ''} className="m-3">
-              <UsedFactor factor={factor} />{' '}
+              <FactorView factor={factor} />{' '}
             </div>
           )
         })}

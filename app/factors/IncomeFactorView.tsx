@@ -1,30 +1,17 @@
 import { Factor } from '@/business/SimulationEngine'
 import { FaArrowTrendUp, FaClock, FaX } from 'react-icons/fa6'
 import { useState } from 'react'
+import FactorBox from './FactorBox'
 
-export default function IncomeFactorView({
-  factor,
-  deleteFactor,
-}: {
-  factor: Factor
-  deleteFactor: Function
-}) {
+export default function IncomeFactorView({ factor }: { factor: Factor }) {
   const [showReductions, setShowReductions] = useState(false)
   return (
-    <div className="text-white flex min-h-[4.5rem]">
-      <FaArrowTrendUp className="text-white text-2xl mr-4 max-w-8 min-w-8" />
+    <FactorBox id={factor.id!} Icon={FaArrowTrendUp} color="emerald-500">
       <div className="grid grid-cols-2 gap-1 text-xs">
         {!showReductions
           ? renderCoreInformation(factor)
           : renderReductions(factor)}
       </div>
-      <a
-        className="absolute top-1 -right-1 h-4 w-7"
-        data-testid="delete-factor"
-        onClick={() => deleteFactor()}
-      >
-        <FaX className="h-full align-middle mx-auto text-gray-100 hidden group-hover:block hover:text-gray-300 cursor-pointer" />
-      </a>
       {factor.reductions && factor.reductions.length > 0 ? (
         <a
           className="absolute bottom-1.5 right-2 w-7"
@@ -35,7 +22,7 @@ export default function IncomeFactorView({
       ) : (
         ''
       )}
-    </div>
+    </FactorBox>
   )
 }
 

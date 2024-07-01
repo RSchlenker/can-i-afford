@@ -52,12 +52,12 @@ it('should update data in graph when adding a new factor', async () => {
 it('should add a new outcome to the list of factors', async () => {
   const { store } = renderWithProviders(<Page />)
   const AITextInput = screen.getByTestId('ai-text-input')
-  const noOfUsedFactors = screen.getAllByTestId('used-factor').length
+  const noOfUsedFactors = screen.getAllByTestId('factor-view').length
   await act(async () => {
     fireEvent.change(AITextInput, {
       target: { value: 'Robin verdient 2000 Euro monatlich.' },
     })
     fireEvent.click(screen.getByText('Vorstellung hinzufügen'))
   })
-  expect(screen.getAllByTestId('used-factor')).toHaveLength(noOfUsedFactors + 1)
+  expect(screen.getAllByTestId('factor-view')).toHaveLength(noOfUsedFactors + 1)
 })
