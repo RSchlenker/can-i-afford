@@ -45,3 +45,20 @@ it('should add reductions', async () => {
     expect(reductions[0].endYear).toBe(2020)
   }
 })
+
+it('should handle one time event', async () => {
+  const responseFromOpenAI = [
+    {
+      name: 'oneTimeEvent',
+      args: { amount: 10000, year: 2040, name: 'Ones upon a time' },
+    },
+  ] as OpenAIToolCall[]
+  const result: Factor[] = convertToFactors(responseFromOpenAI)
+  expect(result).toHaveLength(1)
+  const { type, year, amount, factor } = result[0]
+  expect(type).toEqual(FACTOR_TYPES.ONE_TIME_EVENT)
+  expect(year).toBe(2040)
+  expect(amount).toBe(10000)
+  expect(factor(0, 2040)).toBe(10000)
+  expect(factor(0, 2021)).toBe(0)
+})

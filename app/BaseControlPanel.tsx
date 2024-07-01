@@ -2,8 +2,6 @@ import { RootState, useAppSelector } from '../store/store'
 import { Factor } from '@/business/SimulationEngine'
 import { useEffect, useState } from 'react'
 import UsedFactor from './UsedFactor'
-import AIDialog from './AIDialog'
-import { Button } from '@headlessui/react'
 
 export default function BaseControlPanel() {
   const factors: Array<Factor> = useAppSelector(
@@ -13,11 +11,6 @@ export default function BaseControlPanel() {
   useEffect(() => {
     setFactors(factors)
   }, [factors])
-
-  const [showAIDialog, toggleAIDialog] = useState(false)
-  const reset = () => {
-    toggleAIDialog(false)
-  }
 
   return (
     <div className="flex my-10 flex-grow mx-20 border-2 relative">
@@ -30,13 +23,6 @@ export default function BaseControlPanel() {
           )
         })}
       </div>
-      <Button
-        onClick={() => toggleAIDialog(true)}
-        className="h-8 hover:bg-gray-600 text-white bg-gray-500 absolute right-0 -top-10"
-      >
-        Hinzufügen
-      </Button>
-      {showAIDialog ? <AIDialog onFinished={reset} onCancel={reset} /> : ''}
     </div>
   )
 }

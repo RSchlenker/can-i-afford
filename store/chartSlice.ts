@@ -43,8 +43,12 @@ export const chartSlice = createSlice({
         )
       }
     },
+    removeAllFactors: (state) => {
+      state.factors = []
+    },
   },
 })
 
-export const { setStartYear, addFactor, removeFactor } = chartSlice.actions
+export const { setStartYear, addFactor, removeFactor, removeAllFactors } =
+  chartSlice.actions
 export const chartReducer = chartSlice.reducer

@@ -9,7 +9,7 @@ import {
 
 export const monthlyOutcomeTool = new DynamicStructuredTool({
   name: 'monthlyOutcome',
-  description: 'Calculates the monthly outcome',
+  description: 'Calculates a monthly outcome',
   schema: z.object({
     name: z.string().describe('The name of the outcome'),
     amount: z.number().describe('The amount of money of the outcome'),
@@ -25,7 +25,7 @@ export const monthlyOutcomeTool = new DynamicStructuredTool({
 
 export const monthlyIncomeTool = new DynamicStructuredTool({
   name: 'monthlyIncome',
-  description: 'Calculates the monthly income',
+  description: 'Calculates a monthly income',
   schema: z.object({
     name: z.string().describe('The name of the income'),
     amount: z.number().describe('The amount of money of the income'),
@@ -47,6 +47,18 @@ export const yearlyOutcomeTool = new DynamicStructuredTool({
     amount: z.number().describe('The amount of money of the outcome'),
     startYear: z.number().describe('The first year of the outcome.'),
     endYear: z.number().describe('The last year of the outcome.'),
+  }),
+  func: async ({ name, amount }) => `Outcome of: ${name} (${amount})`,
+} as any)
+
+export const oneTimeInvestment = new DynamicStructuredTool({
+  name: 'oneTimeEvent',
+  description:
+    'Calculates a one time increase or decrease of money. For example buying something only once in a specified year.',
+  schema: z.object({
+    name: z.string().describe('The name of the event'),
+    amount: z.number().describe('The amount of money. Can also be negative.'),
+    year: z.number().describe('The year of the event.'),
   }),
   func: async ({ name, amount }) => `Outcome of: ${name} (${amount})`,
 } as any)

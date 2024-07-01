@@ -1,6 +1,7 @@
 import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
 import { OpenAIToolCall } from '@langchain/core/messages'
 import {
+  buySomething,
   fromToYear,
   monthlyIncome,
   monthlyOutcome,
@@ -10,9 +11,8 @@ import {
 
 export function convertToFactors(processResponse: OpenAIToolCall[]): Factor[] {
   const factors: Factor[] = []
-  console.log(processResponse)
   processResponse.forEach((toolCall) => {
-    const { name, amount, startYear, endYear, factor } = toolCall.args
+    const { name, amount, startYear, endYear, factor, year } = toolCall.args
     if (toolCall.name === 'monthlyIncome') {
       factors.push({
         name,
@@ -52,8 +52,15 @@ export function convertToFactors(processResponse: OpenAIToolCall[]): Factor[] {
       existingFactor.reductions
         ? existingFactor.reductions.push(reduction)
         : (existingFactor.reductions = [reduction])
+    } else if (toolCall.name === 'oneTimeEvent') {
+      factors.push({
+        name,
+        factor: buySomething(-amount, year),
+        type: FACTOR_TYPES.ONE_TIME_EVENT,
+        amount,
+        year,
+      })
     }
   })
-  console.log(factors)
   return factors
 }

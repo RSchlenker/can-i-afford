@@ -5,6 +5,7 @@ import { useAppDispatch } from '../store/store'
 import { useState } from 'react'
 import IncomeFactorView from './factors/IncomeFactorView'
 import OutcomeFactorView from './factors/OutcomeFactorView'
+import OneTimeEventFactorView from './factors/OneTimeEventFactorView'
 
 export default function UsedFactor({ factor }: { factor: Factor }) {
   const dispatch = useAppDispatch()
@@ -19,6 +20,8 @@ export default function UsedFactor({ factor }: { factor: Factor }) {
       case FACTOR_TYPES.YEARLY_OUTCOME:
       case FACTOR_TYPES.MONTHLY_OUTCOME:
         return 'bg-amber-700'
+      case FACTOR_TYPES.ONE_TIME_EVENT:
+        return 'bg-amber-400'
       case FACTOR_TYPES.OTHER:
         return 'bg-gray-500'
     }
@@ -45,6 +48,10 @@ const renderFactorView = (factor: Factor, deleteFactor: Function) => {
     case FACTOR_TYPES.MONTHLY_OUTCOME:
     case FACTOR_TYPES.YEARLY_OUTCOME:
       return <OutcomeFactorView factor={factor} deleteFactor={deleteFactor} />
+    case FACTOR_TYPES.ONE_TIME_EVENT:
+      return (
+        <OneTimeEventFactorView factor={factor} deleteFactor={deleteFactor} />
+      )
     default:
       return (
         <>

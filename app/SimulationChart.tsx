@@ -50,7 +50,11 @@ export default function SimulationChart() {
   }, [startYear, endYear, startVolume, factors])
 
   return (
-    <div data-testid="chart" data-chart-result={lastEntry(data)}>
+    <div
+      data-testid="chart"
+      data-chart-result={lastEntry(data)}
+      className="h-full"
+    >
       <LineChart data={data} />
     </div>
   )

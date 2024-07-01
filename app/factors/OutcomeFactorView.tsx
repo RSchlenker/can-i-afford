@@ -12,7 +12,7 @@ export default function OutcomeFactorView({
   const isMonthly = factor.type === FACTOR_TYPES.MONTHLY_OUTCOME
   const [showReductions, setShowReductions] = useState(false)
   return (
-    <div data-test-id="used-factor" className="text-white flex min-h-[4.5rem]">
+    <div className="text-white flex min-h-[4.5rem]">
       <FaArrowTrendDown className="text-white text-2xl mr-4 max-w-8 min-w-8" />
       <div className="grid grid-cols-2 gap-1 text-xs">
         {!showReductions

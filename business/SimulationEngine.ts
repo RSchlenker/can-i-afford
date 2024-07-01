@@ -4,6 +4,7 @@ export enum FACTOR_TYPES {
   INCOME,
   MONTHLY_OUTCOME,
   YEARLY_OUTCOME,
+  ONE_TIME_EVENT,
   OTHER,
 }
 
@@ -16,6 +17,7 @@ export interface Factor {
   amount?: number
   startYear?: number
   endYear?: number
+  year?: number
 }
 
 export interface SimulationRequest {

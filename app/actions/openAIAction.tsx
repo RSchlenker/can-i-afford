@@ -4,6 +4,7 @@ import { AzureChatOpenAI } from '@langchain/openai'
 import {
   monthlyIncomeTool,
   monthlyOutcomeTool,
+  oneTimeInvestment,
   promptWithExample,
   reduceToTool,
   yearlyOutcomeTool,
@@ -23,6 +24,7 @@ export async function askChatGPT(question: string): Promise<OpenAIToolCall[]> {
     yearlyOutcomeTool,
     monthlyIncomeTool,
     reduceToTool,
+    oneTimeInvestment,
   ])
   const response = await llmWithTools.invoke([
     ...promptWithExample,
