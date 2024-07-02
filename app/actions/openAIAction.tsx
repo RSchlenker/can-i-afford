@@ -1,30 +1,22 @@
 'use server'
 
 import { AzureChatOpenAI } from '@langchain/openai'
-import {
-  monthlyIncomeTool,
-  monthlyOutcomeTool,
-  oneTimeInvestment,
-  promptWithExample,
-  reduceToTool,
-  yearlyOutcomeTool,
-} from '@/business/adapters/OpenAITools'
+import { promptWithExample } from './OpenAITools'
 import { HumanMessage, OpenAIToolCall } from '@langchain/core/messages'
+import { incomeTool } from '../factors/types/income/IncomeTool'
+import { monthlyOutcomeTool } from '../factors/types/outcome/MonthlyOutcomeTool'
+import { yearlyOutcomeTool } from '../factors/types/outcome/YearlyOutcomeTool'
+import { oneTimeEventTool } from '../factors/types/oneTimeEvent/OneTimeEventTool'
+import { reduceToTool } from '../factors/types/reduceTo/ReduceToTool'
 
 export async function askChatGPT(question: string): Promise<OpenAIToolCall[]> {
-  const model = new AzureChatOpenAI({
-    azureOpenAIApiInstanceName: process.env.AZURE_OPENAI_API_INSTANCE_NAME,
-    azureOpenAIApiDeploymentName: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
-    azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
-    azureOpenAIApiVersion: process.env.AZURE_OPENAI_API_VERSION,
-    azureOpenAIBasePath: process.env.AZURE_OPENAI_BASE_PATH,
-  })
+  const model = new AzureChatOpenAI()
   const llmWithTools = model.bindTools([
     monthlyOutcomeTool,
     yearlyOutcomeTool,
-    monthlyIncomeTool,
+    incomeTool,
     reduceToTool,
-    oneTimeInvestment,
+    oneTimeEventTool,
   ])
   const response = await llmWithTools.invoke([
     ...promptWithExample,

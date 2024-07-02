@@ -1,11 +1,11 @@
 import { simulate } from './simulator'
 
 export enum FACTOR_TYPES {
-  INCOME,
-  MONTHLY_OUTCOME,
-  YEARLY_OUTCOME,
-  ONE_TIME_EVENT,
-  OTHER,
+  INCOME = 'income',
+  MONTHLY_OUTCOME = 'monthlyOutcome',
+  YEARLY_OUTCOME = 'yearlyOutcome',
+  ONE_TIME_EVENT = 'oneTimeEvent',
+  OTHER = 'other',
 }
 
 export interface Factor {
