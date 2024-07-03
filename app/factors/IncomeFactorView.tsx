@@ -15,6 +15,7 @@ export default function IncomeFactorView({ factor }: { factor: Factor }) {
       {factor.reductions && factor.reductions.length > 0 ? (
         <a
           className="absolute bottom-1.5 right-2 w-7"
+          data-testid="show-reductions"
           onClick={() => setShowReductions(!showReductions)}
         >
           <FaClock className="h-full w-full align-middle mx-auto text-gray-100 hover:text-gray-300 cursor-pointer" />
