@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Factor } from '@/business/SimulationEngine'
-import { monthlyIncome } from '@/business/finances'
+import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
+import { etfs } from '@/business/finances'
 import { v4 as uuidv4 } from 'uuid'
 
 export interface IChartSlice {
@@ -14,7 +14,14 @@ const initialState: IChartSlice = {
   startYear: 2025,
   startVolume: 50000,
   endYear: 2060,
-  factors: [{ factor: monthlyIncome(2), name: 'income', id: 'some' }],
+  factors: [
+    {
+      factor: etfs(0.02),
+      name: 'Investment 2%',
+      id: 'some',
+      type: FACTOR_TYPES.OTHER,
+    },
+  ],
 }
 
 export const chartSlice = createSlice({
@@ -36,8 +43,12 @@ export const chartSlice = createSlice({
         )
       }
     },
+    removeAllFactors: (state) => {
+      state.factors = []
+    },
   },
 })
 
-export const { setStartYear, addFactor, removeFactor } = chartSlice.actions
+export const { setStartYear, addFactor, removeFactor, removeAllFactors } =
+  chartSlice.actions
 export const chartReducer = chartSlice.reducer

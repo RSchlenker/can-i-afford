@@ -3,14 +3,20 @@ import ReduxProvider from '../store/ReduxProvider'
 import SimulationChart from './SimulationChart'
 import BaseControlPanel from './BaseControlPanel'
 import '../styles/global.css'
+import AITextForm from './AITextForm'
 
 export default function Page() {
   return (
     <ReduxProvider>
       <main className="mx-auto p-8">
-        <h1 className="text-2xl text-center">Can I afford?</h1>
-        <div className="w-1/2 mx-auto">
-          <SimulationChart />
+        <h1 className="text-5xl">Zukunftsplaner</h1>
+        <div className="mx-auto grid grid-cols-5">
+          <div className="col-span-2">
+            <AITextForm />
+          </div>
+          <div className="col-span-2 h-96">
+            <SimulationChart />
+          </div>
         </div>
         <BaseControlPanel />
       </main>
