@@ -5,6 +5,7 @@ export enum FACTOR_TYPES {
   MONTHLY_OUTCOME = 'monthlyOutcome',
   YEARLY_OUTCOME = 'yearlyOutcome',
   ONE_TIME_EVENT = 'oneTimeEvent',
+  START_VOLUME = 'changeStartVolume',
   OTHER = 'other',
 }
 
@@ -18,6 +19,11 @@ export interface Factor {
   startYear?: number
   endYear?: number
   year?: number
+}
+
+export interface Setting {
+  name: string
+  value: number
 }
 
 export interface SimulationRequest {

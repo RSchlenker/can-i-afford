@@ -2,7 +2,7 @@ import { Field, Label, Textarea } from '@headlessui/react'
 import { useState } from 'react'
 import { askChatGPT } from './actions/openAIAction'
 import { convertToFactors } from '@/business/adapters/OpenAIIngress'
-import { addFactor } from '../store/chartSlice'
+import { addFactor, adjustSetting } from '../store/chartSlice'
 import { useAppDispatch } from '../store/store'
 import LoadingButton from './components/LoadingButton'
 
@@ -18,9 +18,12 @@ export default function AITextForm() {
   const onConfirm = async () => {
     setLoading(true)
     const response = await askChatGPT(text)
-    const factors = convertToFactors(response)
+    const { factors, settings } = convertToFactors(response)
     factors.forEach((factor) => {
       dispatch(addFactor(factor))
+    })
+    settings.forEach((setting) => {
+      dispatch(adjustSetting(setting))
     })
     setLoading(false)
     setText('')

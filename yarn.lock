@@ -814,6 +814,14 @@
     "@langchain/core" ">0.2.0 <0.3.0"
     js-tiktoken "^1.0.12"
 
+"@mocks-server/admin-api-client@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@mocks-server/admin-api-client/-/admin-api-client-7.0.0.tgz#81b7d0a7e422f7d71062945e0ced2622b539b154"
+  integrity sha512-upJnRkSCntDrXmlGB4w0xsoVtHLo8Rz5+hqqn/r3C/UWT1qVBooW8bCNPjKLaXh7TAkzynXKCQROVsYdaOholQ==
+  dependencies:
+    "@mocks-server/admin-api-paths" "5.0.0"
+    cross-fetch "3.1.5"
+
 "@mocks-server/admin-api-paths@5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@mocks-server/admin-api-paths/-/admin-api-paths-5.0.0.tgz#b085f05701e52687000a240ef49d8378b0af7480"
@@ -861,6 +869,14 @@
     winston "3.9.0"
     winston-array-transport "1.1.11"
     yaml "2.3.1"
+
+"@mocks-server/cypress-commands@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@mocks-server/cypress-commands/-/cypress-commands-6.1.1.tgz#6e8504526e416bdf739db29b39787bed1c76e4f0"
+  integrity sha512-nO3N43c1e+jxeXtO2RiNxFBuF/G9coAiD6lEPh52J/h/KZhw75eMiae67nmsY+WntJaq5s3/gIRxg1fyCTYhlw==
+  dependencies:
+    "@mocks-server/admin-api-client" "7.0.0"
+    "@mocks-server/admin-api-paths" "5.0.0"
 
 "@mocks-server/logger@1.1.2":
   version "1.1.2"
@@ -2265,6 +2281,13 @@ create-jest@^29.7.0:
     jest-config "^29.7.0"
     jest-util "^29.7.0"
     prompts "^2.0.1"
+
+cross-fetch@3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
+  dependencies:
+    node-fetch "2.6.7"
 
 cross-spawn@^7.0.0, cross-spawn@^7.0.3:
   version "7.0.3"
@@ -4689,6 +4712,13 @@ node-emoji@1.11.0:
   integrity sha512-wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A==
   dependencies:
     lodash "^4.17.21"
+
+node-fetch@2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+  dependencies:
+    whatwg-url "^5.0.0"
 
 node-fetch@^2.6.7:
   version "2.7.0"

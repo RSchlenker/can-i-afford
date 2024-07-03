@@ -1,35 +1,25 @@
-# Next.js + Jest
+# Can I afford?
 
-This example shows how to configure Jest to work with Next.js.
+Das ist die Frage die ich mich gestellt habe vor diesem Projekt. Mit diesem Tool lässt sich grob abschätzen ob man sich
+zum Beispiel eine Immobilie leisten kann. Auf Basis von LLMs werden Zukunftsdarstellungen eingegeben und das System versucht
+diese in konkrete Szenarien umzusetzen.
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
+## Setup
 
-> **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
+Um mit einem laufenden AzureOpenAI Instanz zu laufen musst du das `.env.local` file erstellen und die Werte entsprechend dem `.env.test` file anpassen.
 
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-jest&project-name=with-jest&repository-name=with-jest)
-
-## How to Use
-
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
-
-In your terminal, run the following command:
+Danach nur noch die Dependencies installieren und den Server starten.
 
 ```bash
-npx create-next-app --example with-jest with-jest-app
+yarn install
+yarn dev
 ```
 
-```bash
-yarn create next-app --example with-jest with-jest-app
-```
+## Weitere Ideen
 
-```bash
-pnpm create next-app --example with-jest with-jest-app
-```
-
-## Running Tests
-
-```bash
-npm test
-```
+1. Inflation berechnen bei Einnahmen & Ausgaben
+2. Investitionen & Schulden
+3. Editieren von Faktoren mit llm?
+4. Beispiel Szenarien vorschlagen
+   1. Beispiel Immobilienkauf, Todesfall, Kinder, ...
+5. Varianten des Szenarios einblenden (10% mehr / 10 % weniger...)

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
+import { Factor, FACTOR_TYPES, Setting } from '@/business/SimulationEngine'
 import { etfs } from '@/business/finances'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -36,6 +36,11 @@ export const chartSlice = createSlice({
         state.factors.push({ ...action.payload, id: uuidv4() })
       }
     },
+    adjustSetting: (state, action?: PayloadAction<Setting>) => {
+      if (action) {
+        state[action.payload.name] = action.payload.value
+      }
+    },
     removeFactor: (state, action?: PayloadAction<string>) => {
       if (action) {
         state.factors = state.factors.filter(
@@ -49,6 +54,6 @@ export const chartSlice = createSlice({
   },
 })
 
-export const { setStartYear, addFactor, removeFactor, removeAllFactors } =
+export const { addFactor, removeFactor, removeAllFactors, adjustSetting } =
   chartSlice.actions
 export const chartReducer = chartSlice.reducer

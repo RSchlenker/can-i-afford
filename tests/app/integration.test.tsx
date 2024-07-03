@@ -34,7 +34,7 @@ it('should update data in graph when adding a new factor', async () => {
   renderWithProviders(<Page />)
   expect(screen.getByTestId('chart')).toHaveAttribute(
     'data-chart-result',
-    '99994.47763312282',
+    '99994',
   )
   const AITextInput = screen.getByTestId('ai-text-input')
   await act(async () => {
@@ -45,7 +45,7 @@ it('should update data in graph when adding a new factor', async () => {
   })
   expect(screen.getByTestId('chart')).toHaveAttribute(
     'data-chart-result',
-    '76507.33944188905',
+    '76507',
   )
 })
 

@@ -4,6 +4,7 @@ import SimulationChart from './SimulationChart'
 import BaseControlPanel from './BaseControlPanel'
 import '../styles/global.css'
 import AITextForm from './AITextForm'
+import CoreInformationPanel from './CoreInformationPanel'
 
 export default function Page() {
   return (
@@ -16,6 +17,9 @@ export default function Page() {
           </div>
           <div className="col-span-2 h-96">
             <SimulationChart />
+          </div>
+          <div className="col-span-1">
+            <CoreInformationPanel />
           </div>
         </div>
         <BaseControlPanel />

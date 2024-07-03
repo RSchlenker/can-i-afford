@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:mock": "yarn mocks && NODE_ENV=test next dev",
+    "dev:mock": "yarn mocks & NODE_ENV=test next dev",
     "build": "next build",
     "start": "next start",
     "test": "jest --watch",
@@ -32,6 +32,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@mocks-server/cypress-commands": "^6.1.1",
     "@mocks-server/main": "^4.1.0",
     "@testing-library/dom": "^10.2.0",
     "@testing-library/jest-dom": "6.4.6",
