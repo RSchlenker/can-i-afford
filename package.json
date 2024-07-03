@@ -32,6 +32,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@mocks-server/cypress-commands": "^6.1.1",
     "@mocks-server/main": "^4.1.0",
     "@testing-library/dom": "^10.2.0",
     "@testing-library/jest-dom": "6.4.6",

@@ -52,7 +52,7 @@ export default function SimulationChart() {
   return (
     <div
       data-testid="chart"
-      data-chart-result={lastEntry(data)}
+      data-chart-result={lastEntry(data).toFixed(0)}
       className="h-full"
     >
       <LineChart data={data} />
