@@ -32,7 +32,7 @@ export default function SimulationChart() {
   const [data, setData] = useState(currentData)
 
   const lastEntry = (data: any) => {
-    return data.datasets[0].data[data.datasets[0].data.length - 1]
+    return data.datasets[0].data[data.datasets[0].data.length - 1] || 0
   }
 
   useEffect(() => {

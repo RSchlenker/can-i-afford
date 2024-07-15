@@ -17,9 +17,12 @@ yarn dev
 
 ## Weitere Ideen
 
-1. Inflation berechnen bei Einnahmen & Ausgaben
-2. Investitionen & Schulden
-3. Editieren von Faktoren mit llm?
-4. Beispiel Szenarien vorschlagen
+1. Chatlog behalten und mitschicken (Vielleicht auch nur das letzte Ergebnis) und immer alles ersetzen im Frontend.
+2. Kosten messen (Azure OpenAI)
+3. Inflation berechnen bei Einnahmen & Ausgaben
+4. Investitionen & Schulden
+5. Editieren von Faktoren mit llm?
+6. Beispiel Szenarien vorschlagen
    1. Beispiel Immobilienkauf, Todesfall, Kinder, ...
-5. Varianten des Szenarios einblenden (10% mehr / 10 % weniger...)
+7. Varianten des Szenarios einblenden (10% mehr / 10 % weniger...)
+8. Detaillierte Tabelle der Transaktionen als Export?
