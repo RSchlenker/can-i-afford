@@ -1,4 +1,9 @@
-import { Factor, FACTOR_TYPES, Setting } from '@/business/SimulationEngine'
+import {
+  ChangeRequest,
+  Factor,
+  FACTOR_TYPES,
+  Setting,
+} from '@/business/SimulationEngine'
 import { OpenAIToolCall } from '@langchain/core/messages'
 import { reducedDuring } from '@/business/finances'
 import IncomeFactor from '../../app/factors/types/income/IncomeFactor'
@@ -6,13 +11,16 @@ import MonthlyOutcomeFactor from '../../app/factors/types/outcome/MonthlyOutcome
 import YearlyOutcomeFactor from '../../app/factors/types/outcome/YearlyOutcomeFactor'
 import OneTimeEventFactor from '../../app/factors/types/oneTimeEvent/OneTimeEventFactor'
 import StartVolumeSetting from '../../app/factors/types/settings/StartVolumeSetting'
+import ChangeFactor from '../../app/factors/types/change/ChangeFactor'
 
 export function convertToFactors(processResponse: OpenAIToolCall[]): {
   factors: Factor[]
   settings: Setting[]
+  changes: ChangeRequest[]
 } {
   const factors: Factor[] = []
   const settings: Setting[] = []
+  const changes: ChangeRequest[] = []
   processResponse.forEach((toolCall) => {
     if (toolCall.name === FACTOR_TYPES.INCOME) {
       factors.push(IncomeFactor.toFactor(toolCall))
@@ -26,9 +34,11 @@ export function convertToFactors(processResponse: OpenAIToolCall[]): {
       factors.push(OneTimeEventFactor.toFactor(toolCall))
     } else if (toolCall.name === FACTOR_TYPES.START_VOLUME) {
       settings.push(StartVolumeSetting.toSetting(toolCall))
+    } else if (toolCall.name === FACTOR_TYPES.CHANGE_FACTOR) {
+      changes.push(ChangeFactor.toChangeRequest(toolCall))
     }
   })
-  return { factors, settings }
+  return { factors, settings, changes }
 }
 
 function reduceFactor(factors: Factor[], { name, startYear, endYear, factor }) {

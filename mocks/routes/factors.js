@@ -49,6 +49,15 @@ const sampleResponse = {
           },
           {
             arguments: {
+              name: 'mein Monatsauskommen',
+              startYear: 2033,
+              endYear: 2065,
+              amount: 2000,
+            },
+            type: 'monthlyOutcome',
+          },
+          {
+            arguments: {
               name: 'mein mock jahreseinkommen',
               year: 2045,
               amount: 200000,
@@ -60,6 +69,15 @@ const sampleResponse = {
               amount: 10000,
             },
             type: 'changeStartVolume',
+          },
+          {
+            arguments: {
+              name: 'mein Monatsauskommen',
+              fields: {
+                amount: 1122,
+              },
+            },
+            type: 'changeFactor',
           },
         ]),
       },
@@ -75,6 +93,24 @@ const sampleResponse = {
               amount: 10000,
             },
             type: 'changeStartVolume',
+          },
+        ]),
+      },
+    },
+    {
+      id: 'changeOutcome',
+      type: 'json',
+      options: {
+        status: 200,
+        body: getToolsResponse([
+          {
+            arguments: {
+              name: 'mein Monatsauskommen',
+              fields: {
+                amount: 7777,
+              },
+            },
+            type: 'changeFactor',
           },
         ]),
       },

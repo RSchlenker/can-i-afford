@@ -44,4 +44,15 @@ describe('Factors', () => {
     cy.contains('Vorstellung hinzufügen').click()
     cy.get('[data-chart-result="19999"]')
   })
+
+  it('should change the outcome with AI', () => {
+    cy.visit('http://localhost:3000/')
+    cy.get('textarea').type('Anything')
+    cy.contains('Vorstellung hinzufügen').click()
+    cy.contains('7777 / Monat').should('not.exist')
+    cy.mocksUseRouteVariant('get-tool-calls:changeOutcome')
+    cy.get('textarea').type('Mein Auskommen beträgt doch nur 7777 Euro')
+    cy.contains('Vorstellung hinzufügen').click()
+    cy.contains('7777 / Monat')
+  })
 })

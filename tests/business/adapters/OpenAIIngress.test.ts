@@ -1,7 +1,11 @@
 import { expect, it } from '@jest/globals'
 import { OpenAIToolCall } from '@langchain/core/messages'
 import { convertToFactors } from '@/business/adapters/OpenAIIngress'
-import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
+import {
+  ChangeRequest,
+  Factor,
+  FACTOR_TYPES,
+} from '@/business/SimulationEngine'
 
 it('should be able to convert time framed monthlyOutcome', async () => {
   const responseFromOpenAI = [
@@ -111,4 +115,21 @@ it('should handle change of start volume', async () => {
   const { name, value } = settings[0]
   expect(name).toEqual('startVolume')
   expect(value).toBe(10000)
+})
+
+it('should be able to handle edit requests', async () => {
+  const responseFromOpenAI = [
+    {
+      name: 'changeFactor',
+      args: {
+        name: 'mein einkommen',
+        fields: { amount: 4444 },
+      },
+    },
+  ] as OpenAIToolCall[]
+  const { changes }: ChangeRequest[] = convertToFactors(responseFromOpenAI)
+  expect(changes).toHaveLength(1)
+  const { name, fields } = changes[0]
+  expect(name).toEqual('mein einkommen')
+  expect(fields).toEqual({ amount: 4444 })
 })

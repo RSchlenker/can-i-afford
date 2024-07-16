@@ -14,4 +14,22 @@ export default class MonthlyOutcomeFactor {
       endYear,
     }
   }
+
+  static changeFields(
+    factor: Factor,
+    fields: {
+      name?: string
+      amount?: number
+      startYear?: number
+      endYear?: number
+    },
+  ): Factor {
+    const result = MonthlyOutcomeFactor.toFactor({
+      args: {
+        ...factor,
+        ...fields,
+      },
+    } as OpenAIToolCall)
+    return result
+  }
 }

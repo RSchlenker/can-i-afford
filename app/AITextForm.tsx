@@ -2,9 +2,14 @@ import { Field, Label, Textarea } from '@headlessui/react'
 import { useState } from 'react'
 import { askChatGPT } from './actions/openAIAction'
 import { convertToFactors } from '@/business/adapters/OpenAIIngress'
-import { addFactor, adjustSetting } from '../store/chartSlice'
-import { useAppDispatch } from '../store/store'
+import {
+  addFactor,
+  adjustSetting,
+  applyChangeToFactor,
+} from '../store/chartSlice'
+import { RootState, useAppDispatch, useAppSelector } from '../store/store'
 import LoadingButton from './components/LoadingButton'
+import { Factor } from '@/business/SimulationEngine'
 
 const placeholder = `Ich verdiene 4000 Euro pro Monat.
   Ab 2035 möchte ich nur noch Teilzeit arbeiten: 70% ist genug.
@@ -12,18 +17,33 @@ const placeholder = `Ich verdiene 4000 Euro pro Monat.
   Für Urlaub gebe ich 8000 Euro pro Jahr aus.`
 
 export default function AITextForm() {
+  const currentFactors: Array<Factor> = useAppSelector(
+    (state: RootState) => state.chart.factors,
+  )
   const [text, setText] = useState('')
   const [loading, setLoading] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const onConfirm = async () => {
     setLoading(true)
-    const response = await askChatGPT(text)
-    const { factors, settings } = convertToFactors(response)
+    const factorsAsString = currentFactors
+      .map((factor) => ({
+        name: factor.name,
+        amount: factor.amount,
+        startYear: factor.startYear,
+        endYear: factor.endYear,
+      }))
+      .map((it) => JSON.stringify(it))
+      .join('\n')
+    const response = await askChatGPT(text, factorsAsString)
+    const { factors, settings, changes } = convertToFactors(response)
     factors.forEach((factor) => {
       dispatch(addFactor(factor))
     })
     settings.forEach((setting) => {
       dispatch(adjustSetting(setting))
+    })
+    changes.forEach((change) => {
+      dispatch(applyChangeToFactor(change))
     })
     setLoading(false)
     setText('')

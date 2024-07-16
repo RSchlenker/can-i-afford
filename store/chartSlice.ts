@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Factor, FACTOR_TYPES, Setting } from '@/business/SimulationEngine'
+import {
+  ChangeRequest,
+  Factor,
+  FACTOR_TYPES,
+  Setting,
+} from '@/business/SimulationEngine'
 import { etfs } from '@/business/finances'
 import { v4 as uuidv4 } from 'uuid'
+import MonthlyOutcomeFactor from '../app/factors/types/outcome/MonthlyOutcomeFactor'
 
 export interface IChartSlice {
   startYear: number
@@ -41,6 +47,24 @@ export const chartSlice = createSlice({
         state[action.payload.name] = action.payload.value
       }
     },
+    applyChangeToFactor: (state, action?: PayloadAction<ChangeRequest>) => {
+      if (action) {
+        const factor = state.factors.find(
+          (f: Factor) => f.name === action.payload.name,
+        )
+        if (factor) {
+          state.factors = state.factors.filter(
+            (f: Factor) => f.name !== action.payload.name,
+          )
+          state.factors.push(
+            MonthlyOutcomeFactor.changeFields(
+              { ...factor },
+              action.payload.fields,
+            ),
+          )
+        }
+      }
+    },
     removeFactor: (state, action?: PayloadAction<string>) => {
       if (action) {
         state.factors = state.factors.filter(
@@ -54,6 +78,11 @@ export const chartSlice = createSlice({
   },
 })
 
-export const { addFactor, removeFactor, removeAllFactors, adjustSetting } =
-  chartSlice.actions
+export const {
+  addFactor,
+  removeFactor,
+  removeAllFactors,
+  adjustSetting,
+  applyChangeToFactor,
+} = chartSlice.actions
 export const chartReducer = chartSlice.reducer
