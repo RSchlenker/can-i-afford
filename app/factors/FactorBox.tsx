@@ -23,6 +23,7 @@ export default function FactorBox({
       className={
         'w-72 p-4 text-white flex relative group min-h-[4.5rem] bg-' + color
       }
+      data-testid="factor-box"
     >
       <Icon className="text-white text-2xl mr-4 max-w-8 min-w-8" />
       {children}

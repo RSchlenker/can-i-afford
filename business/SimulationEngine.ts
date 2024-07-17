@@ -47,7 +47,10 @@ export interface SimulationResult {
 
 export class SimulationEngine {
   simulate(request: SimulationRequest): Array<SimulationResult> {
-    const factorsToSimulate = request.factors.map((f) => f.factor)
+    let factorsToSimulate = request.factors.map((f) => f.factor)
+    if (factorsToSimulate.length === 0) {
+      factorsToSimulate = [(it) => it]
+    }
     return simulate(
       factorsToSimulate,
       request.startYear,
