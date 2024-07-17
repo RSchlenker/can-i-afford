@@ -27,29 +27,21 @@ beforeEach(async () => {
       target: { value: 0.0 },
     })
   })
+  expectChartResultToBe(0)
 })
 
 it('should update existing factor', async () => {
   expect(screen.getByTestId('chart')).toHaveAttribute('data-chart-result', '0')
   await triggerResponseFor([MONTHLY_OUTCOME, CHANGE_AMOUNT_TO_100])
   await click(screen.getByText('Vorstellung hinzufügen'))
-  expect(screen.getByTestId('chart')).toHaveAttribute(
-    'data-chart-result',
-    `${21 * 12 * -100}`,
-  )
+  expectChartResultToBe(21 * 12 * -100)
 })
 
 it('should reduce existing factor', async () => {
   await triggerResponseFor([MONTHLY_OUTCOME])
-  expect(screen.getByTestId('chart')).toHaveAttribute(
-    'data-chart-result',
-    `${21 * 12 * -1000}`,
-  )
+  expectChartResultToBe(21 * 12 * -1000)
   await triggerResponseFor([REDUCE_FOR_10_YEARS])
-  expect(screen.getByTestId('chart')).toHaveAttribute(
-    'data-chart-result',
-    `${11 * 12 * -1000 + 10 * 12 * -500}`,
-  )
+  expectChartResultToBe(11 * 12 * -1000 + 10 * 12 * -500)
   await act(async () => {
     fireEvent.click(screen.getByTestId('show-reductions'))
   })
@@ -60,10 +52,7 @@ it('should reduce existing factor', async () => {
 
 it('should keep reductions when changing an existing factor', async () => {
   await triggerResponseFor([MONTHLY_OUTCOME, REDUCE_FOR_10_YEARS])
-  expect(screen.getByTestId('chart')).toHaveAttribute(
-    'data-chart-result',
-    `${11 * 12 * -1000 + 10 * 12 * -500}`,
-  )
+  expectChartResultToBe(11 * 12 * -1000 + 10 * 12 * -500)
   mockFactors = [CHANGE_START_OF_OUTCOME_TO_2025]
   await click(screen.getByText('Vorstellung hinzufügen'))
   expect(screen.getByText('2025 - 2045', { exact: false })).toBeInTheDocument()
@@ -71,6 +60,27 @@ it('should keep reductions when changing an existing factor', async () => {
   expect(screen.getByText('Anpassungen')).toBeInTheDocument()
   expect(screen.getByText('2030 - 2040', { exact: false })).toBeInTheDocument()
   expect(screen.getByText('50%')).toBeInTheDocument()
+})
+
+it('should change the name of an existing factor', async () => {
+  await triggerResponseFor([MONTHLY_OUTCOME])
+  expect(screen.queryByText('new outcome name')).not.toBeInTheDocument()
+  await triggerResponseFor([CHANGE_OF_NAME])
+  expect(screen.queryByText('new outcome name')).toBeInTheDocument()
+})
+
+it('should change income', async () => {
+  await triggerResponseFor([MONTHLY_INCOME])
+  expectChartResultToBe(10 * 12 * 1000)
+  await triggerResponseFor([CHANGE_INCOME_TO_100])
+  expectChartResultToBe(10 * 12 * 100)
+})
+
+it('should change yearly outcome', async () => {
+  await triggerResponseFor([YEARLY_OUTCOME])
+  expectChartResultToBe(21 * -1000)
+  await triggerResponseFor([CHANGE_YEARLY_OUTCOME_TO_100])
+  expectChartResultToBe(21 * -100)
 })
 
 async function click(element) {
@@ -83,6 +93,50 @@ async function triggerResponseFor(factors) {
   return act(async () => {
     fireEvent.click(screen.getByText('Vorstellung hinzufügen'))
   })
+}
+function expectChartResultToBe(value: number) {
+  expect(screen.getByTestId('chart')).toHaveAttribute(
+    'data-chart-result',
+    `${value}`,
+  )
+}
+
+const MONTHLY_INCOME = {
+  name: FACTOR_TYPES.INCOME,
+  args: {
+    name: 'my income',
+    amount: 1000,
+    startYear: 2025,
+    endYear: 2034,
+  },
+}
+const CHANGE_INCOME_TO_100 = {
+  name: FACTOR_TYPES.CHANGE_FACTOR,
+  args: {
+    name: MONTHLY_INCOME.args.name,
+    fields: {
+      amount: 100,
+    },
+  },
+}
+
+const YEARLY_OUTCOME = {
+  name: FACTOR_TYPES.YEARLY_OUTCOME,
+  args: {
+    name: 'my yearly outcome',
+    amount: 1000,
+    startYear: 2025,
+    endYear: 2045,
+  },
+}
+const CHANGE_YEARLY_OUTCOME_TO_100 = {
+  name: FACTOR_TYPES.CHANGE_FACTOR,
+  args: {
+    name: YEARLY_OUTCOME.args.name,
+    fields: {
+      amount: 100,
+    },
+  },
 }
 
 const MONTHLY_OUTCOME = {
@@ -100,6 +154,15 @@ const CHANGE_AMOUNT_TO_100 = {
     name: MONTHLY_OUTCOME.args.name,
     fields: {
       amount: 100,
+    },
+  },
+}
+const CHANGE_OF_NAME = {
+  name: FACTOR_TYPES.CHANGE_FACTOR,
+  args: {
+    name: MONTHLY_OUTCOME.args.name,
+    fields: {
+      name: 'new outcome name',
     },
   },
 }

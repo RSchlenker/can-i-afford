@@ -14,4 +14,21 @@ export default class YearlyOutcomeFactor {
       endYear,
     }
   }
+
+  static changeFields(
+    factor: Factor,
+    fields: {
+      name?: string
+      amount?: number
+      startYear?: number
+      endYear?: number
+    },
+  ): Factor {
+    return YearlyOutcomeFactor.toFactor({
+      args: {
+        ...factor,
+        ...fields,
+      },
+    } as OpenAIToolCall)
+  }
 }

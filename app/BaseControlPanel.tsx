@@ -17,7 +17,7 @@ export default function BaseControlPanel() {
       <div className="p-10 w-full flex flex-wrap">
         {factorsToDisplay.map((factor) => {
           return (
-            <div key={factor.id || ''} className="m-3">
+            <div key={factor.id || Math.random()} className="m-3">
               <FactorView factor={factor} />{' '}
             </div>
           )

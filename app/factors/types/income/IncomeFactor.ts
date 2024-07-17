@@ -14,4 +14,22 @@ export default class IncomeFactor {
       endYear,
     }
   }
+
+  static changeFields(
+    factor: Factor,
+    fields: {
+      name?: string
+      amount?: number
+      startYear?: number
+      endYear?: number
+    },
+  ): Factor {
+    const result = IncomeFactor.toFactor({
+      args: {
+        ...factor,
+        ...fields,
+      },
+    } as OpenAIToolCall)
+    return result
+  }
 }
