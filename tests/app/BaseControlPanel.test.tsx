@@ -26,7 +26,7 @@ it.skip('should add a income factor', () => {
   expect(screen.getByTestId('add-factor')).toBeVisible()
 })
 
-it.skip('should should hide menu when showing form', () => {
+it.skip('should hide menu when showing form', () => {
   renderWithProviders(<BaseControlPanel />)
   expect(screen.queryByTestId('add-income')).not.toBeVisible()
   fireEvent.click(screen.getByTestId('add-factor'))

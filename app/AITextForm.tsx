@@ -3,13 +3,14 @@ import { useState } from 'react'
 import { askChatGPT } from './actions/openAIAction'
 import { convertToFactors } from '@/business/adapters/OpenAIIngress'
 import {
-  addFactor,
   adjustSetting,
   applyChangeToFactor,
+  setFactors,
 } from '../store/chartSlice'
 import { RootState, useAppDispatch, useAppSelector } from '../store/store'
 import LoadingButton from './components/LoadingButton'
 import { Factor } from '@/business/SimulationEngine'
+import cloneDeep from 'lodash/cloneDeep'
 
 const placeholder = `Ich verdiene 4000 Euro pro Monat.
   Ab 2035 möchte ich nur noch Teilzeit arbeiten: 70% ist genug.
@@ -35,10 +36,12 @@ export default function AITextForm() {
       .map((it) => JSON.stringify(it))
       .join('\n')
     const response = await askChatGPT(text, factorsAsString)
-    const { factors, settings, changes } = convertToFactors(response)
-    factors.forEach((factor) => {
-      dispatch(addFactor(factor))
-    })
+    const clonedFactors = cloneDeep(currentFactors)
+    const { factors, settings, changes } = convertToFactors(
+      response,
+      clonedFactors,
+    )
+    dispatch(setFactors(factors))
     settings.forEach((setting) => {
       dispatch(adjustSetting(setting))
     })

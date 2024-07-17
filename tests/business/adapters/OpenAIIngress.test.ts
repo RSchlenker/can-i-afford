@@ -14,7 +14,7 @@ it('should be able to convert time framed monthlyOutcome', async () => {
       args: { amount: 1000, startYear: 2017, endYear: 2020, name: 'Test name' },
     },
   ] as OpenAIToolCall[]
-  const { factors }: Factor[] = convertToFactors(responseFromOpenAI)
+  const { factors }: Factor[] = convertToFactors(responseFromOpenAI, [])
   expect(factors).toHaveLength(1)
   const { type, startYear, endYear, amount, factor } = factors[0]
   expect(type).toEqual(FACTOR_TYPES.MONTHLY_OUTCOME)
@@ -36,7 +36,7 @@ it('should add reductions', async () => {
       args: { factor: 0.5, startYear: 2017, endYear: 2020, name: 'Test name' },
     },
   ] as OpenAIToolCall[]
-  const { factors }: Factor[] = convertToFactors(responseFromOpenAI)
+  const { factors }: Factor[] = convertToFactors(responseFromOpenAI, [])
   expect(factors).toHaveLength(1)
   const { type, factor, reductions } = factors[0]
   expect(type).toEqual(FACTOR_TYPES.MONTHLY_OUTCOME)
@@ -57,7 +57,7 @@ it('should be able to convert time framed yearly outcome', async () => {
       args: { amount: 1000, startYear: 2017, endYear: 2020, name: 'Test name' },
     },
   ] as OpenAIToolCall[]
-  const { factors }: Factor[] = convertToFactors(responseFromOpenAI)
+  const { factors }: Factor[] = convertToFactors(responseFromOpenAI, [])
   expect(factors).toHaveLength(1)
   const { type, startYear, endYear, amount, factor } = factors[0]
   expect(type).toEqual(FACTOR_TYPES.YEARLY_OUTCOME)
@@ -75,7 +75,7 @@ it('should be able to convert time framed monthly income', async () => {
       args: { amount: 1000, startYear: 2017, endYear: 2020, name: 'Test name' },
     },
   ] as OpenAIToolCall[]
-  const { factors }: Factor[] = convertToFactors(responseFromOpenAI)
+  const { factors }: Factor[] = convertToFactors(responseFromOpenAI, [])
   expect(factors).toHaveLength(1)
   const { type, startYear, endYear, amount, factor } = factors[0]
   expect(type).toEqual(FACTOR_TYPES.INCOME)
@@ -93,7 +93,7 @@ it('should handle one time event', async () => {
       args: { amount: 10000, year: 2040, name: 'Ones upon a time' },
     },
   ] as OpenAIToolCall[]
-  const { factors }: Factor[] = convertToFactors(responseFromOpenAI)
+  const { factors }: Factor[] = convertToFactors(responseFromOpenAI, [])
   expect(factors).toHaveLength(1)
   const { type, year, amount, factor } = factors[0]
   expect(type).toEqual(FACTOR_TYPES.ONE_TIME_EVENT)
@@ -110,7 +110,7 @@ it('should handle change of start volume', async () => {
       args: { amount: 10000 },
     },
   ] as OpenAIToolCall[]
-  const { settings }: Factor[] = convertToFactors(responseFromOpenAI)
+  const { settings }: Factor[] = convertToFactors(responseFromOpenAI, [])
   expect(settings).toHaveLength(1)
   const { name, value } = settings[0]
   expect(name).toEqual('startVolume')
@@ -127,7 +127,7 @@ it('should be able to handle edit requests', async () => {
       },
     },
   ] as OpenAIToolCall[]
-  const { changes }: ChangeRequest[] = convertToFactors(responseFromOpenAI)
+  const { changes }: ChangeRequest[] = convertToFactors(responseFromOpenAI, [])
   expect(changes).toHaveLength(1)
   const { name, fields } = changes[0]
   expect(name).toEqual('mein einkommen')

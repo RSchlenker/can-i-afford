@@ -30,6 +30,19 @@ const initialState: IChartSlice = {
   ],
 }
 
+function updateFieldsOfFactor(factor: Factor, fields: any): Factor {
+  if (factor['type'] === FACTOR_TYPES.MONTHLY_OUTCOME) {
+    const adjustedFactor = MonthlyOutcomeFactor.changeFields(
+      { ...factor },
+      fields,
+    )
+    return MonthlyOutcomeFactor.withReductions(
+      adjustedFactor,
+      factor.reductions,
+    )
+  }
+}
+
 export const chartSlice = createSlice({
   name: 'chart',
   initialState,
@@ -41,6 +54,9 @@ export const chartSlice = createSlice({
       if (action) {
         state.factors.push({ ...action.payload, id: uuidv4() })
       }
+    },
+    setFactors: (state, action: PayloadAction<Array<Factor>>) => {
+      state.factors = action.payload
     },
     adjustSetting: (state, action?: PayloadAction<Setting>) => {
       if (action) {
@@ -57,10 +73,7 @@ export const chartSlice = createSlice({
             (f: Factor) => f.name !== action.payload.name,
           )
           state.factors.push(
-            MonthlyOutcomeFactor.changeFields(
-              { ...factor },
-              action.payload.fields,
-            ),
+            updateFieldsOfFactor(factor, action.payload.fields),
           )
         }
       }
@@ -81,6 +94,7 @@ export const chartSlice = createSlice({
 export const {
   addFactor,
   removeFactor,
+  setFactors,
   removeAllFactors,
   adjustSetting,
   applyChangeToFactor,

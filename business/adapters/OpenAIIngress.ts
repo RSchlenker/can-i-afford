@@ -13,12 +13,14 @@ import OneTimeEventFactor from '../../app/factors/types/oneTimeEvent/OneTimeEven
 import StartVolumeSetting from '../../app/factors/types/settings/StartVolumeSetting'
 import ChangeFactor from '../../app/factors/types/change/ChangeFactor'
 
-export function convertToFactors(processResponse: OpenAIToolCall[]): {
+export function convertToFactors(
+  processResponse: OpenAIToolCall[],
+  factors: Factor[],
+): {
   factors: Factor[]
   settings: Setting[]
   changes: ChangeRequest[]
 } {
-  const factors: Factor[] = []
   const settings: Setting[] = []
   const changes: ChangeRequest[] = []
   processResponse.forEach((toolCall) => {

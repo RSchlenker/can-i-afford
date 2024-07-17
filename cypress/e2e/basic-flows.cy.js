@@ -45,6 +45,8 @@ describe('Factors', () => {
     cy.get('[data-chart-result="19999"]')
   })
 
+  //TODO: Add income changes as well
+
   it('should change the outcome with AI', () => {
     cy.visit('http://localhost:3000/')
     cy.get('textarea').type('Anything')

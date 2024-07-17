@@ -17,6 +17,7 @@
     "@langchain/openai": "^0.2.0",
     "@reduxjs/toolkit": "^2.2.3",
     "chart.js": "^4.4.2",
+    "lodash": "^4.17.21",
     "next": "latest",
     "prettier": "^3.2.5",
     "ramda": "^0.29.1",

@@ -7,6 +7,7 @@ export enum FACTOR_TYPES {
   ONE_TIME_EVENT = 'oneTimeEvent',
   START_VOLUME = 'changeStartVolume',
   CHANGE_FACTOR = 'changeFactor',
+  REDUCE_TO = 'reduceTo',
   OTHER = 'other',
 }
 
