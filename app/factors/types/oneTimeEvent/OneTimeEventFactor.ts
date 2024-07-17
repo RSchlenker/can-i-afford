@@ -13,4 +13,20 @@ export default class OneTimeEventFactor {
       year,
     }
   }
+
+  static changeFields(
+    factor: Factor,
+    fields: {
+      name?: string
+      amount?: number
+      year?: number
+    },
+  ): Factor {
+    return OneTimeEventFactor.toFactor({
+      args: {
+        ...factor,
+        ...fields,
+      },
+    } as OpenAIToolCall)
+  }
 }

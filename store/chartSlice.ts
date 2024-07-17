@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import MonthlyOutcomeFactor from '../app/factors/types/outcome/MonthlyOutcomeFactor'
 import IncomeFactor from '../app/factors/types/income/IncomeFactor'
 import YearlyOutcomeFactor from '../app/factors/types/outcome/YearlyOutcomeFactor'
+import OneTimeEventFactor from '../app/factors/types/oneTimeEvent/OneTimeEventFactor'
 
 export interface IChartSlice {
   startYear: number
@@ -50,6 +51,15 @@ function updateFieldsOfFactor(factor: Factor, fields: any): Factor {
     )
   } else if (factor['type'] === FACTOR_TYPES.YEARLY_OUTCOME) {
     const adjustedFactor = YearlyOutcomeFactor.changeFields(
+      { ...factor },
+      fields,
+    )
+    return MonthlyOutcomeFactor.withReductions(
+      adjustedFactor,
+      factor.reductions,
+    )
+  } else if (factor.type === FACTOR_TYPES.ONE_TIME_EVENT) {
+    const adjustedFactor = OneTimeEventFactor.changeFields(
       { ...factor },
       fields,
     )

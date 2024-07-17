@@ -42,9 +42,7 @@ it('should reduce existing factor', async () => {
   expectChartResultToBe(21 * 12 * -1000)
   await triggerResponseFor([REDUCE_FOR_10_YEARS])
   expectChartResultToBe(11 * 12 * -1000 + 10 * 12 * -500)
-  await act(async () => {
-    fireEvent.click(screen.getByTestId('show-reductions'))
-  })
+  await click(screen.getByTestId('show-reductions'))
   expect(screen.getByText('Anpassungen')).toBeInTheDocument()
   expect(screen.getByText('2030 - 2040', { exact: false })).toBeInTheDocument()
   expect(screen.getByText('50%')).toBeInTheDocument()
@@ -83,6 +81,13 @@ it('should change yearly outcome', async () => {
   expectChartResultToBe(21 * -100)
 })
 
+it('should change one time event', async () => {
+  await triggerResponseFor([ONE_TIME_EVENT])
+  expectChartResultToBe(1000)
+  await triggerResponseFor([CHANGE_ONE_TIME_EVENT_TO_100])
+  expectChartResultToBe(100)
+})
+
 async function click(element) {
   await act(async () => {
     fireEvent.click(element)
@@ -114,6 +119,24 @@ const CHANGE_INCOME_TO_100 = {
   name: FACTOR_TYPES.CHANGE_FACTOR,
   args: {
     name: MONTHLY_INCOME.args.name,
+    fields: {
+      amount: 100,
+    },
+  },
+}
+
+const ONE_TIME_EVENT = {
+  name: FACTOR_TYPES.ONE_TIME_EVENT,
+  args: {
+    name: 'my event',
+    amount: 1000,
+    year: 2025,
+  },
+}
+const CHANGE_ONE_TIME_EVENT_TO_100 = {
+  name: FACTOR_TYPES.CHANGE_FACTOR,
+  args: {
+    name: ONE_TIME_EVENT.args.name,
     fields: {
       amount: 100,
     },
