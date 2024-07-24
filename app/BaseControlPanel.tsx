@@ -1,3 +1,4 @@
+'use client'
 import { RootState, useAppSelector } from '../store/store'
 import { Factor } from '@/business/SimulationEngine'
 import { useEffect, useState } from 'react'

@@ -1,3 +1,4 @@
+'use client'
 import { Field, Label, Textarea } from '@headlessui/react'
 import { useState } from 'react'
 import { askChatGPT } from './actions/openAIAction'
@@ -24,6 +25,7 @@ export default function AITextForm() {
   const [text, setText] = useState('')
   const [loading, setLoading] = useState<boolean>(false)
   const dispatch = useAppDispatch()
+  const [authenticated, setAuthenticated] = useState<boolean>(true)
   const onConfirm = async () => {
     setLoading(true)
     const factorsAsString = currentFactors
@@ -35,10 +37,15 @@ export default function AITextForm() {
       }))
       .map((it) => JSON.stringify(it))
       .join('\n')
-    const response = await askChatGPT(text, factorsAsString)
+    const { authenticated, toolCalls } = await askChatGPT(text, factorsAsString)
+    setLoading(false)
+    setAuthenticated(authenticated)
+    if (!authenticated) {
+      return
+    }
     const clonedFactors = cloneDeep(currentFactors)
     const { factors, settings, changes } = convertToFactors(
-      response,
+      toolCalls,
       clonedFactors,
     )
     dispatch(setFactors(factors))
@@ -48,7 +55,6 @@ export default function AITextForm() {
     changes.forEach((change) => {
       dispatch(applyChangeToFactor(change))
     })
-    setLoading(false)
     setText('')
   }
   return (
@@ -64,12 +70,19 @@ export default function AITextForm() {
           data-testid="ai-text-input"
         />
       </Field>
-      <div className="w-full flex">
-        <LoadingButton
-          text="Vorstellung hinzufügen"
-          isLoading={loading}
-          onClick={onConfirm}
-        />
+      <div className="flex text-amber-700 pl-3">
+        {!authenticated ? (
+          <p>You are unauthenticated, please log in to continue</p>
+        ) : (
+          ''
+        )}
+        <div className="w-full flex">
+          <LoadingButton
+            text="Vorstellung hinzufügen"
+            isLoading={loading}
+            onClick={onConfirm}
+          />
+        </div>
       </div>
     </div>
   )

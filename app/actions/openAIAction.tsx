@@ -10,11 +10,20 @@ import { oneTimeEventTool } from '../factors/types/oneTimeEvent/OneTimeEventTool
 import { reduceToTool } from '../factors/types/reduceTo/ReduceToTool'
 import { changeStartVolumeTool } from '../factors/types/settings/ChangeStartVolumeTool'
 import { changeTool } from '../factors/types/change/changeTool'
+import isAuthenticated from './authenticated'
+import { ToolCallResponse } from './ActionDTO'
 
 export async function askChatGPT(
   question: string,
   existingFactors: string,
-): Promise<OpenAIToolCall[]> {
+): Promise<ToolCallResponse> {
+  const authenticated = await isAuthenticated()
+  if (!authenticated) {
+    return {
+      toolCalls: [],
+      authenticated: false,
+    }
+  }
   const model = new AzureChatOpenAI()
   const llmWithTools = model.bindTools([
     monthlyOutcomeTool,
@@ -30,5 +39,8 @@ export async function askChatGPT(
     new HumanMessage(`Current Factors:\n ${existingFactors}`),
     new HumanMessage(question),
   ])
-  return response.tool_calls as OpenAIToolCall[]
+  return {
+    authenticated: true,
+    toolCalls: response.tool_calls as OpenAIToolCall[],
+  }
 }

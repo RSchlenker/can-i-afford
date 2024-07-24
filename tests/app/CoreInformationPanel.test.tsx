@@ -4,20 +4,25 @@ import Page from '../../app/page'
 import { screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/dom'
 import { act } from 'react'
+import { successfulToolCallResponse } from '../TestHelper'
+import { ToolCallResponse } from '../../app/actions/ActionDTO'
+import { OpenAIToolCall } from '@langchain/core/messages'
 
 let nextStartVolume = 10000
 
 jest.mock('../../app/actions/openAIAction', () => {
   return {
-    askChatGPT: (text: string): Promise<object[]> => {
-      return Promise.resolve([
-        {
-          name: 'changeStartVolume',
-          args: {
-            amount: nextStartVolume,
+    askChatGPT: (text: string): Promise<ToolCallResponse> => {
+      return Promise.resolve(
+        successfulToolCallResponse([
+          {
+            name: 'changeStartVolume',
+            args: {
+              amount: nextStartVolume,
+            },
           },
-        },
-      ])
+        ] as OpenAIToolCall[]),
+      )
     },
   }
 })

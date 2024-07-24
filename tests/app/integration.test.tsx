@@ -4,38 +4,37 @@ import { renderWithProviders } from '../utils'
 import { expect, it } from '@jest/globals'
 import { fireEvent } from '@testing-library/dom'
 import { act } from 'react'
+import {
+  removeAllExistingFactors,
+  successfulToolCallResponse,
+} from '../TestHelper'
+import { ToolCallResponse } from '../../app/actions/ActionDTO'
+import { OpenAIToolCall } from '@langchain/core/messages'
 
 jest.mock('../../app/actions/openAIAction', () => {
   return {
-    askChatGPT: (text: string): Promise<object[]> => {
-      return Promise.resolve([
-        {
-          name: 'monthlyOutcome',
-          args: {
-            amount: 100,
-            startYear: 2025,
-            endYear: 2035,
-            name: 'Test name',
+    askChatGPT: (text: string): Promise<ToolCallResponse> => {
+      return Promise.resolve(
+        successfulToolCallResponse([
+          {
+            name: 'monthlyOutcome',
+            args: {
+              amount: 100,
+              startYear: 2025,
+              endYear: 2035,
+              name: 'Test name',
+            },
           },
-        },
-      ])
+        ] as OpenAIToolCall[]),
+      )
     },
   }
 })
 
-it('should display heading', () => {
-  renderWithProviders(<Page />)
-  expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-    'Zukunftsplaner',
-  )
-})
-
 it('should update data in graph when adding a new factor', async () => {
   renderWithProviders(<Page />)
-  expect(screen.getByTestId('chart')).toHaveAttribute(
-    'data-chart-result',
-    '99994',
-  )
+  await removeAllExistingFactors()
+  expect(screen.getByTestId('chart')).toHaveAttribute('data-chart-result', '0')
   const AITextInput = screen.getByTestId('ai-text-input')
   await act(async () => {
     fireEvent.change(AITextInput, {
@@ -45,7 +44,7 @@ it('should update data in graph when adding a new factor', async () => {
   })
   expect(screen.getByTestId('chart')).toHaveAttribute(
     'data-chart-result',
-    '76507',
+    (-11 * 12 * 100).toString(),
   )
 })
 

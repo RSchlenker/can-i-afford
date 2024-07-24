@@ -1,3 +1,4 @@
+'use client'
 import LineChart from './components/LineChart'
 import { RootState, useAppSelector } from '../store/store'
 import { SimulationRequest } from '@/business/SimulationEngine'

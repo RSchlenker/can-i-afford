@@ -1,3 +1,4 @@
+'use client'
 import { Field, Input, Label } from '@headlessui/react'
 import { useEffect, useState } from 'react'
 import { RootState, useAppDispatch, useAppSelector } from '../store/store'

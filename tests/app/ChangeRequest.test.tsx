@@ -5,28 +5,26 @@ import { beforeEach, expect, it } from '@jest/globals'
 import { fireEvent } from '@testing-library/dom'
 import { act } from 'react'
 import { FACTOR_TYPES } from '@/business/SimulationEngine'
+import { OpenAIToolCall } from '@langchain/core/messages'
+import { ToolCallResponse } from '../../app/actions/ActionDTO'
+import {
+  removeAllExistingFactors,
+  successfulToolCallResponse,
+} from '../TestHelper'
 
 jest.mock('../../app/actions/openAIAction', () => {
   return {
-    askChatGPT: (): Promise<object[]> => {
-      return Promise.resolve(mockFactors)
+    askChatGPT: (): Promise<ToolCallResponse> => {
+      return Promise.resolve(successfulToolCallResponse(mockFactors))
     },
   }
 })
 
-let mockFactors = [] as object[]
+let mockFactors = [] as OpenAIToolCall[]
 
 beforeEach(async () => {
   renderWithProviders(<Page />)
-  const factorBoxes = screen.getAllByTestId('factor-box')
-  await act(async () => {
-    factorBoxes.forEach(() => {
-      fireEvent.click(screen.getByTestId('delete-factor'))
-    })
-    fireEvent.change(screen.getByTestId('start-volume-input'), {
-      target: { value: 0.0 },
-    })
-  })
+  await removeAllExistingFactors()
   expectChartResultToBe(0)
 })
 
