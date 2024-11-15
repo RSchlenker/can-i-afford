@@ -1,6 +1,7 @@
 import { OpenAIToolCall } from '@langchain/core/messages'
 import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
 import { buySomething } from '@/business/finances'
+import { uuid } from 'uuidv4'
 
 export default class OneTimeEventFactor {
   static toFactor(call: OpenAIToolCall): Factor {
@@ -11,6 +12,7 @@ export default class OneTimeEventFactor {
       type: FACTOR_TYPES.ONE_TIME_EVENT,
       amount,
       year,
+      id: uuid(),
     }
   }
 

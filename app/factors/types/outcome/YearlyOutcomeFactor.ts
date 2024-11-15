@@ -1,6 +1,7 @@
 import { OpenAIToolCall } from '@langchain/core/messages'
 import { Factor, FACTOR_TYPES } from '@/business/SimulationEngine'
 import { fromToYear, outcome } from '@/business/finances'
+import { uuid } from 'uuidv4'
 
 export default class YearlyOutcomeFactor {
   static toFactor(call: OpenAIToolCall): Factor {
@@ -12,6 +13,7 @@ export default class YearlyOutcomeFactor {
       amount,
       startYear,
       endYear,
+      id: uuid(),
     }
   }
 

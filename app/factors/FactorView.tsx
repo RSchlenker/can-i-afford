@@ -24,7 +24,7 @@ const renderCorrectFactorView = (factor: Factor) => {
       return <OneTimeEventFactorView factor={factor} />
     default:
       return (
-        <FactorBox Icon={FaArrowTrendUp} id={factor.id}>
+        <FactorBox Icon={FaArrowTrendUp} id={factor.id!}>
           <p className="font-semibold">{factor.name}</p>
         </FactorBox>
       )
