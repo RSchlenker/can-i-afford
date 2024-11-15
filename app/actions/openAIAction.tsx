@@ -24,23 +24,27 @@ export async function askChatGPT(
       authenticated: false,
     }
   }
-  const model = new AzureChatOpenAI()
-  const llmWithTools = model.bindTools([
-    monthlyOutcomeTool,
-    yearlyOutcomeTool,
-    incomeTool,
-    reduceToTool,
-    oneTimeEventTool,
-    changeStartVolumeTool,
-    changeTool,
-  ])
-  const response = await llmWithTools.invoke([
-    ...promptWithExample,
-    new HumanMessage(`Current Factors:\n ${existingFactors}`),
-    new HumanMessage(question),
-  ])
-  return {
-    authenticated: true,
-    toolCalls: response.tool_calls as OpenAIToolCall[],
+  try {
+    const model = new AzureChatOpenAI()
+    const llmWithTools = model.bindTools([
+      monthlyOutcomeTool,
+      yearlyOutcomeTool,
+      incomeTool,
+      reduceToTool,
+      oneTimeEventTool,
+      changeStartVolumeTool,
+      changeTool,
+    ])
+    const response = await llmWithTools.invoke([
+      ...promptWithExample,
+      new HumanMessage(`Current Factors:\n ${existingFactors}`),
+      new HumanMessage(question),
+    ])
+    return {
+      authenticated: true,
+      toolCalls: response.tool_calls as OpenAIToolCall[],
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
