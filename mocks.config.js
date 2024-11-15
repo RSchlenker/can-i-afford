@@ -12,8 +12,7 @@ module.exports = {
   plugins: {
     // Plugins to be registered
     //register: [],
-    proxyRoutesHandler: {
-    },
+    proxyRoutesHandler: {},
     adminApi: {
       // Port number for the admin API server to be listening at
       //port: 3110,
@@ -103,4 +102,4 @@ module.exports = {
     // Variant Handlers to be registered
     //register: [],
   },
-};
+}
