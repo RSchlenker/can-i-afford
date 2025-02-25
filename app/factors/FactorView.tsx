@@ -25,7 +25,10 @@ const renderCorrectFactorView = (factor: Factor) => {
     default:
       return (
         <FactorBox Icon={FaArrowTrendUp} id={factor.id!}>
-          <p className="font-semibold">{factor.name}</p>
+          <div className="flex flex-col">
+            <p className="font-semibold">{factor.name}</p>
+            <p>{factor.amount}</p>
+          </div>
         </FactorBox>
       )
   }

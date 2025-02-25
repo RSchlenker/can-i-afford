@@ -5,12 +5,14 @@ import {
   FACTOR_TYPES,
   Setting,
 } from '@/business/SimulationEngine'
-import { etfs } from '@/business/finances'
+import { etfs, interestRate } from '@/business/finances'
 import { v4 as uuidv4 } from 'uuid'
 import MonthlyOutcomeFactor from '../app/factors/types/outcome/MonthlyOutcomeFactor'
 import IncomeFactor from '../app/factors/types/income/IncomeFactor'
 import YearlyOutcomeFactor from '../app/factors/types/outcome/YearlyOutcomeFactor'
 import OneTimeEventFactor from '../app/factors/types/oneTimeEvent/OneTimeEventFactor'
+import InvestmentFactor from '../app/factors/types/investment/InvestmentFactor'
+import InterestRateFactor from '../app/factors/types/interestRate/InterestRateFactor'
 
 export interface IChartSlice {
   startYear: number
@@ -20,15 +22,23 @@ export interface IChartSlice {
 }
 
 const initialState: IChartSlice = {
-  startYear: 2025,
-  startVolume: 50000,
+  startYear: 2026,
+  startVolume: 70000,
   endYear: 2060,
   factors: [
     {
-      factor: etfs(0.02),
-      name: 'Investment 2%',
-      id: 'some',
-      type: FACTOR_TYPES.OTHER,
+      factor: etfs(0.03),
+      name: 'Investment 3%',
+      amount: 0.03,
+      id: 'investment-rate',
+      type: FACTOR_TYPES.INVESTMENT_RATE,
+    },
+    {
+      factor: interestRate(0.03),
+      name: 'Zinsen 3%',
+      id: 'interest-rate',
+      amount: 0.03,
+      type: FACTOR_TYPES.INTEREST_RATE,
     },
   ],
 }
@@ -49,6 +59,10 @@ function updateFieldsOfFactor(factor: Factor, fields: any): Factor {
       adjustedFactor,
       factor.reductions,
     )
+  } else if (factor['type'] === FACTOR_TYPES.INVESTMENT_RATE) {
+    return InvestmentFactor.changeFields({ ...factor }, fields)
+  } else if (factor['type'] === FACTOR_TYPES.INTEREST_RATE) {
+    return InterestRateFactor.changeFields({ ...factor }, fields)
   } else if (factor['type'] === FACTOR_TYPES.YEARLY_OUTCOME) {
     const adjustedFactor = YearlyOutcomeFactor.changeFields(
       { ...factor },
